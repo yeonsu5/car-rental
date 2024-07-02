@@ -1,22 +1,53 @@
 package workshop.car_api.repository
 
+import com.querydsl.core.group.GroupBy
+import com.querydsl.core.group.GroupBy.groupBy
+import com.querydsl.core.group.GroupBy.list
+import com.querydsl.core.types.Projections
+
+import com.querydsl.jpa.JPAExpressions
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.jpa.domain.Specification.where
 import org.springframework.stereotype.Repository
 import workshop.car_api.dto.CarListRequestDto
 import workshop.car_api.dto.CarListResponseDto
-import workshop.car_api.entity.QCarEntity
+import workshop.car_api.dto.CategoryListResponseDto
+import workshop.car_api.entity.QCarCategoryEntity.*
+import workshop.car_api.entity.QCarEntity.*
+import workshop.car_api.entity.QCategoryEntity.*
 
 @Repository
 class CarQuerydslRepositoryImpl() : CarQuerydslRepository {
     @Autowired
     lateinit var queryFactory: JPAQueryFactory
 
-    override fun getCars(dto: CarListRequestDto): Any
-//            List<CarListResponseDto>
-    {
-        QCarEntity.carEntity
-//        queryFactory
-//            .select()
+    override fun getCars(dto: CarListRequestDto): List<CarListResponseDto> {
+
+        // 전체 조회
+        val result = queryFactory
+            .from(carEntity)
+            .join(carEntity.carCategories, carCategoryEntity)
+            .join(carCategoryEntity.categoryEntity, categoryEntity)
+            .transform(
+                groupBy(carEntity.id).list(
+                    Projections.constructor(
+                        CarListResponseDto::class.java,
+                        carEntity.manufacturer,
+                        carEntity.model,
+                        carEntity.year,
+                        carEntity.isAvailable,
+                        list(
+                            Projections.constructor(
+                                CategoryListResponseDto::class.java, categoryEntity.name
+                            )
+                        )
+                    )
+                )
+            ) ?: listOf()
+
+        return result
+
+
     }
 }

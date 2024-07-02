@@ -1,5 +1,6 @@
 package workshop.car_api.entity
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 
 @Entity
@@ -22,6 +23,7 @@ class CarEntity(
     var isAvailable: Boolean = true,
 
     @OneToMany(mappedBy = "carEntity")
+    @JsonIgnore
     val carCategories: List<CarCategoryEntity> = ArrayList(),
 
     )

@@ -5,5 +5,5 @@ data class CarListResponseDto(
     val model: String,
     val year: String,
     val isAvailable: Boolean,
-    val categoryNames: List<String>,
+    val categories: List<CategoryListResponseDto>,
 )

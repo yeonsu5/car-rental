@@ -38,8 +38,10 @@ dependencies {
 
 	// queryDSL
 	implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
+	// Q 클래스 생성 위해 kapt 필요
 	kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
 
+	implementation("com.fasterxml.jackson.core:jackson-databind")
 
 //	kapt("org.springframework.boot:spring-boot-configuration-processor")
 }

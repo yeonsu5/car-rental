@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional
 import workshop.car_api.dto.CarCreateRequestDto
 import workshop.car_api.dto.CarCreateResponseDto
 import workshop.car_api.dto.CarListRequestDto
+import workshop.car_api.dto.CarListResponseDto
 import workshop.car_api.entity.CarEntity
 import workshop.car_api.entity.CarCategoryEntity
 import workshop.car_api.entity.CategoryEntity
@@ -21,7 +22,7 @@ class CarService(
 ) {
 
     @Transactional
-    fun createCar(dto: CarCreateRequestDto) : CarCreateResponseDto {
+    fun createCar(dto: CarCreateRequestDto): CarCreateResponseDto {
         // get categories by category ids
         val categoryIds = dto.categoryIds
         val categories = getCategoryByIds(categoryIds)
@@ -50,10 +51,8 @@ class CarService(
         )
     }
 
-    fun getCars(dto: CarListRequestDto) {
-        carRepository.getCars(dto)
-
-
+    fun getCars(dto: CarListRequestDto): List<CarListResponseDto> {
+        return carRepository.getCars(dto)
     }
 
 

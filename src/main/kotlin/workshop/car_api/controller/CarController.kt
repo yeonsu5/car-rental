@@ -27,9 +27,9 @@ class CarController(
     // 조회 -> 파라미터 없으면 전체조회
     @GetMapping
     fun getCars(@ModelAttribute dto: CarListRequestDto) : ResponseEntity<*> {
-        carService.getCars(dto)
+        val cars = carService.getCars(dto)
 
-        return ResponseEntity.ok("")
+        return ResponseEntity.ok(cars)
     }
 
 }

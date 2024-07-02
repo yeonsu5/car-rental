@@ -5,6 +5,5 @@ import workshop.car_api.dto.CarListResponseDto
 
 interface CarQuerydslRepository {
 
-    fun getCars(dto: CarListRequestDto): Any
-            // List<CarListResponseDto>
+    fun getCars(dto: CarListRequestDto): List<CarListResponseDto>
 }

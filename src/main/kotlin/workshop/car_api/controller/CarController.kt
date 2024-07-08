@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import workshop.car_api.dto.CarAndCategoryCreateRequestDto
 import workshop.car_api.dto.CarCreateRequestDto
 import workshop.car_api.dto.CarListRequestDto
 import workshop.car_api.service.CarService
@@ -23,6 +24,14 @@ class CarController(
 
         return ResponseEntity.ok(createdCar)
     }
+
+    // 등록 API 2 - car, category 함께 저장
+    @PostMapping("/withCategory")
+    fun createCar2(@RequestBody dto: CarAndCategoryCreateRequestDto) : ResponseEntity<*> {
+        val createCarWithCategories = carService.createCarWithCategories(dto)
+        return ResponseEntity.ok(createCarWithCategories)
+    }
+
 
     // 조회 -> 파라미터 없으면 전체조회
     @GetMapping
